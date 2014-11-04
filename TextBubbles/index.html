@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>Text Bubbles</title>
+
+	<link type="text/css" rel="stylesheet" href="css/text-bubbles.css">
+	<script type="text/javascript" src="js/text-bubbles.js"></script>
+</head>
+
+<body>
+	<div class="wrapper-main" data-role="page">
+		<div class="wrapper-head">
+			<div class="wrapper-head-block">
+				<h1>Text<br />Bubbles</h1>
+			</div>
+			<div class="wrapper-head-block full-block">
+				<textarea id="text-bubbles-input"></textarea>
+			</div>
+			<div class="wrapper-head-block">
+				<input type="radio" name="bubble-type" id="bubble-type-linear" value="linear" checked="checked" />&nbsp;Linear<br />
+				<input type="radio" name="bubble-type" id="bubble-type-square" value="square" />&nbsp;Square<br />
+				<input type="radio" name="bubble-type" id="bubble-type-area"   value="area"   />&nbsp;Circular Area<br />
+				<br />
+				<input type="range" id="bubble-set-scale" />&nbsp;Scale
+				<input type="range" id="bubble-set-spacing" />&nbsp;Spacing
+			</div>
+		</div>
+		<div class="wrapper-body" id="text-bubbles-output">
+			<div class="wrapper-text" id="text-bubbles-output"></div>
+		</div>
+	</div>
+	<script>textBubbles.init();</script>
+</body>
+
+</html>
+
