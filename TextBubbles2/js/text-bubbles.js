@@ -18,7 +18,8 @@ var textBubbles = (function () {
 	};
 
 	var scale       = 2,
-		spacing     = 12,
+		spacing     = 1,
+		isGridded   = false,
 		regExpSplit = new RegExp('[^a-zA-Z\\d\\.\\-\']'), // /[^a-zA-Z\d\.\-']/
 		regExpCount = new RegExp('[^a-zA-Z\\d]', 'g'),    // /[^a-zA-Z\d]/g
 		bubbleType  = kBT.LINEAR;
@@ -45,15 +46,21 @@ var textBubbles = (function () {
 				var len  = word.replace(regExpCount, '').length,
 					size = getSize(len);
 
-				bubbles.push(
-					$('<div />')
-						.addClass('word-bubble')
-						.attr('data-title', '[' + len + '] ' + word)
-						.width(size)
-						.height(size)
-						.css('background-color', 'hsl(' + (len * 7 - 300) + ', 50%, 50%)')
-						//.css({margin:(spacing - size) / 2})
-				);
+				if (len) {
+					bubbles.push(
+						$('<div />')
+							.addClass('word-bubble')
+							.attr('data-title', '[' + len + '] ' + word)
+							.width(size)
+							.height(size)
+							.css('background-color', 'hsl(' + (len * 7 - 300) + ', 50%, 50%)')
+							.css(
+								(isGridded)?
+									{'margin' : (spacing - size + 10) / 2} :
+									{'margin-right' : spacing}
+							)
+					);
+				}
 			}
 		);
 
@@ -100,9 +107,18 @@ var textBubbles = (function () {
 				function () {
 					var x = Number(this.value);
 					if (!isNaN(x)) {
-						spacing = x;
+						spacing = x / 5;
 						updateBubbles();
 					}
+				}
+			);
+
+		$('#bubble-set-gridded')
+			.on(
+				'change',
+				function () {
+					isGridded = !!this.checked;
+					updateBubbles();
 				}
 			);
 
