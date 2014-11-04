@@ -117,4 +117,5 @@ div.wrapper-text {
 	font-size : smaller;
 	padding : 0 10px;
 	content : attr(data-title);
+	white-space : nowrap;
 }

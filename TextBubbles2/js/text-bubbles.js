@@ -19,8 +19,8 @@ var textBubbles = (function () {
 
 	var scale       = 2,
 		spacing     = 12,
-		regExpSplit = /[^a-zA-Z\d\-']/,
-		regExpCount = /[^a-zA-Z\d]/,
+		regExpSplit = /[^a-zA-Z\d\.\-']/,
+		regExpCount = /[^a-zA-Z\d]/g,
 		bubbleType  = kBT.LINEAR;
 
 	var $input,
