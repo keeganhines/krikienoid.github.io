@@ -61,7 +61,13 @@ body,
 }
 
 div.wrapper-text {
-	padding : 24px;
+	padding  : 24px;
+	position : relative;
+	display   : flex;
+	flex-wrap : wrap;
+	flex      : 1;
+	justify-content : center;
+	align-items : center;
 }
 
 /* //// Styling //// */
@@ -81,13 +87,18 @@ div.wrapper-text {
 /* //// Bubbles //// */
 
 .word-bubble {
-	background-color : #bbb;
-	border-radius    : 50%;
-	border           : 1.5px solid #000;
+	position      : relative;
+	background    : lightgray;
+	border-radius : 50%;
+	margin  : 1px;
 	float   : left;
-	display : inline;
+	display : inline-block;
+	box-shadow : inset 200px 200px rgba(0,0,0,0);
+	transition : box-shadow .2s;
 }
 
 .word-bubble:hover {
-	border-color : #f00;
+	border  : 1.5px solid #888;
+	z-index : 100;
+	box-shadow : inset 200px 200px rgba(0,0,0,.4);
 }
