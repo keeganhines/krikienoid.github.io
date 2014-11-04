@@ -53,6 +53,7 @@ var textBubbles = (function () {
 					updateBubbles();
 				}
 			};
+		updateBubbles();
 	}
 
 	function getSize (x) {
