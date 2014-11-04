@@ -92,13 +92,15 @@ div.wrapper-text {
 	border-radius : 50%;
 	margin  : 1px;
 	float   : left;
-<<<<<<< HEAD
-	display : inline;
-	position: relative;
+	display : inline-block;
+	box-shadow : inset 200px 200px rgba(0,0,0,0);
+	transition : box-shadow .2s;
 }
 
 .word-bubble:hover {
-	border-color : #f00;
+	border  : 1.5px solid #888;
+	z-index : 100;
+	box-shadow : inset 200px 200px rgba(0,0,0,.4);
 }
 
 /* css tooltips */
@@ -113,21 +115,4 @@ div.wrapper-text {
 	font-size : smaller;
 	padding : 0 10px;
 	content : attr(title);
-}
-
-/* //// Misc //// */
-
-.text-container {
-	display : none;
-=======
-	display : inline-block;
-	box-shadow : inset 200px 200px rgba(0,0,0,0);
-	transition : box-shadow .2s;
-}
-
-.word-bubble:hover {
-	border  : 1.5px solid #888;
-	z-index : 100;
-	box-shadow : inset 200px 200px rgba(0,0,0,.4);
->>>>>>> TextBubbles2
 }
