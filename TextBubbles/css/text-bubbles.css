@@ -64,11 +64,27 @@ body,
 	border           : 1px solid #000;
 	float   : left;
 	display : inline;
+	position: relative;
 }
 
 .word-bubble:hover {
 	border-color : #f00;
 }
+
+/* css tooltips */
+.word-bubble:hover:before {
+  display: inline-block;
+  top: 15px;
+  position: absolute;
+  font-size: smaller;
+  background: rgba(0, 0, 0, 0.8);
+  color: whitesmoke;
+  font: 12px/22px sans-serif;
+  border-radius: 3px;
+  padding: 0 10px;
+  content: attr(title);
+}
+
 
 /* //// Misc //// */
 
