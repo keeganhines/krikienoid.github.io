@@ -102,3 +102,17 @@ div.wrapper-text {
 	z-index : 100;
 	box-shadow : inset 200px 200px rgba(0,0,0,.4);
 }
+
+/* css tooltips */
+.word-bubble:hover:before {
+	display  : inline-block;
+	position : absolute;
+	top      : 15px;
+	background : rgba(0, 0, 0, 0.8);
+	border-radius : 3px;
+	color : whitesmoke;
+	font  : 12px/22px sans-serif;
+	font-size : smaller;
+	padding : 0 10px;
+	content : attr(title);
+}
