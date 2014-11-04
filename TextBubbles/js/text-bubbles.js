@@ -12,33 +12,47 @@ var textBubbles = (function () {
 		LINEAR : 0, SQUARE : 1, AREA : 2
 	};
 
-	var scale      = 2,
-		spacing    = 12,
-		regExp     = /[^a-zA-Z\d]/,
-		bubbleType = kBT.LINEAR;
+	var scale       = 2,
+		spacing     = 12,
+		regExpSplit = /[^a-zA-Z\d\-']/,
+		regExpCount = /[^a-zA-Z\d]/,
+		bubbleType  = kBT.LINEAR;
 
 	var IN,
-		OUT,
-		OPT_LIN,
-		OPT_SQUARE,
-		OPT_AREA;
+		OUT;
 
 	function init () {
 		IN  = document.getElementById('text-bubbles-input');
 		IN.oninput = updateBubbles;
 		OUT = document.getElementById('text-bubbles-output');
-		OPT_LIN    = document.getElementById('bubble-type-linear');
-		OPT_SQUARE = document.getElementById('bubble-type-square');
-		OPT_AREA   = document.getElementById('bubble-type-area');
-		OPT_LIN    .onclick = setBubbleType;
-		OPT_SQUARE .onclick = setBubbleType;
-		OPT_AREA   .onclick = setBubbleType;
-		document.getElementById('bubble-set-scale').value   = scale;
+		document.getElementById('bubble-type').onchange =
+			function () {
+				if     (this.value === "area")
+					bubbleType = kBT.AREA;
+				else if(this.value === "square")
+					bubbleType = kBT.SQUARE;
+				else
+					bubbleType = kBT.LINEAR;
+				updateBubbles();
+			};
+		document.getElementById('bubble-set-scale').value = scale;
 		document.getElementById('bubble-set-spacing').value = spacing;
 		document.getElementById('bubble-set-scale').onchange =
-			function () {setScale(Number(this.value));};
+			function () {
+				var x = Number(this.value);
+				if (!isNaN(x)) {
+					scale = x / 10;
+					updateBubbles();
+				}
+			};
 		document.getElementById('bubble-set-spacing').onchange =
-			function () {setSpacing(Number(this.value));};
+			function () {
+				var x = Number(this.value);
+				if (!isNaN(x)) {
+					spacing = x;
+					updateBubbles();
+				}
+			};
 	}
 
 	function getSize (x) {
@@ -54,7 +68,7 @@ var textBubbles = (function () {
 		var newBubble = document.createElement('div'),
 			size      = getSize(word.length) * scale;
 		newBubble.classList.add('word-bubble');
-		newBubble.title = '[' + word.length + '] ' + word;
+		newBubble.title = '[' + word.replace(regExpCount, '').length + '] ' + word;
 		newBubble.style.height =
 			newBubble.style.width =
 				size + 'px';
@@ -72,10 +86,7 @@ var textBubbles = (function () {
 	}
 
 	function updateBubbles () {
-		printBubbles(IN.value.split(regExp));
-	}
-
-	function printBubbles (words) {
+		var words = IN.value.split(regExpSplit);
 		removeAllChildren(OUT);
 		for (var i = 0, ii = words.length; i < ii; i++) {
 			if (words[i].length) {
@@ -86,33 +97,8 @@ var textBubbles = (function () {
 		}
 	}
 
-	function setBubbleType () {
-		if (OPT_AREA.checked)
-			bubbleType = kBT.AREA;
-		else if(OPT_SQUARE.checked)
-			bubbleType = kBT.SQUARE;
-		else
-			bubbleType = kBT.LINEAR;
-		updateBubbles();			
-	}
-
-	function setScale (x) {
-		if (!isNaN(x)) {
-			scale = x / 10;
-			updateBubbles();
-		}
-	}
-
-	function setSpacing (x) {
-		if (!isNaN(x)) {
-			spacing = x;
-			updateBubbles();
-		}
-	}
-
 	return {
-		init         : init,
-		printBubbles : printBubbles,
+		init : init
 	};
 
 })();

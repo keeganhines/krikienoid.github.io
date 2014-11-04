@@ -22,11 +22,13 @@
 				<textarea id="text-bubbles-input"></textarea>
 			</div>
 			<div class="wrapper-head-block">
-				<input type="radio" name="bubble-type" id="bubble-type-linear" value="linear" checked="checked" />&nbsp;Linear<br />
-				<input type="radio" name="bubble-type" id="bubble-type-square" value="square" />&nbsp;Square<br />
-				<input type="radio" name="bubble-type" id="bubble-type-area"   value="area"   />&nbsp;Circular Area<br />
+				<select id="bubble-type">
+					<option value="linear">Linear</option>
+					<option value="square">Square</option>
+					<option value="area"  >Circular Area</option>
+				</select>
 				<br />
-				<input type="range" id="bubble-set-scale" />&nbsp;Scale
+				<input type="range" id="bubble-set-scale" />&nbsp;Scale<br />
 				<input type="range" id="bubble-set-spacing" />&nbsp;Spacing
 			</div>
 		</div>
