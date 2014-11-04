@@ -2,8 +2,13 @@
  * Text Bubbles
  * represent words as a series of bubbles
  * 
- * Ken Sugiura 2014
- * MIT License
+ * Contributors:
+ *
+ * Ken Sugiura /u/krikienoid (reddit)
+ * /u/qi1 (reddit)
+ * /u/kylemit (reddit)
+ *
+ * MIT License 2014
  */
 
 var textBubbles = (function () {
@@ -18,87 +23,93 @@ var textBubbles = (function () {
 		regExpCount = /[^a-zA-Z\d]/,
 		bubbleType  = kBT.LINEAR;
 
-	var IN,
-		OUT;
-
-	function init () {
-		IN  = document.getElementById('text-bubbles-input');
-		IN.oninput = updateBubbles;
-		OUT = document.getElementById('text-bubbles-output');
-		document.getElementById('bubble-type').onchange =
-			function () {
-				if     (this.value === "area")
-					bubbleType = kBT.AREA;
-				else if(this.value === "square")
-					bubbleType = kBT.SQUARE;
-				else
-					bubbleType = kBT.LINEAR;
-				updateBubbles();
-			};
-		document.getElementById('bubble-set-scale').value = scale;
-		document.getElementById('bubble-set-spacing').value = spacing;
-		document.getElementById('bubble-set-scale').onchange =
-			function () {
-				var x = Number(this.value);
-				if (!isNaN(x)) {
-					scale = x / 10;
-					updateBubbles();
-				}
-			};
-		document.getElementById('bubble-set-spacing').onchange =
-			function () {
-				var x = Number(this.value);
-				if (!isNaN(x)) {
-					spacing = x;
-					updateBubbles();
-				}
-			};
-	}
+	var $input,
+		$output;
 
 	function getSize (x) {
 		switch (bubbleType) {
-			case kBT.LINEAR : return x;
-			case kBT.SQUARE : return Math.sqrt(x);
-			case kBT.AREA   : return Math.sqrt(x / Math.PI) * 2;
-			default         : return x;
+			case kBT.LINEAR : return x * scale;
+			case kBT.SQUARE : return Math.sqrt(x) * scale;
+			case kBT.AREA   : return Math.sqrt(x / Math.PI) * 2 * scale;
+			default         : return x * scale;
 		}
-	}
-
-	function createBubble (word) {
-		var newBubble = document.createElement('div'),
-			size      = getSize(word.length) * scale;
-		newBubble.classList.add('word-bubble');
-		newBubble.title = '[' + word.replace(regExpCount, '').length + '] ' + word;
-		newBubble.style.height =
-			newBubble.style.width =
-				size + 'px';
-		newBubble.style.marginTop =
-			newBubble.style.marginLeft =
-				newBubble.style.marginRight =
-					newBubble.style.marginBottom =
-						(spacing - size) / 2 + 'px';
-		return newBubble;
-	}
-
-	function removeAllChildren (node) {
-		while (node.firstChild)
-			node.removeChild(node.firstChild);
 	}
 
 	function updateBubbles () {
-		var words = IN.value.split(regExpSplit);
-		removeAllChildren(OUT);
-		for (var i = 0, ii = words.length; i < ii; i++) {
-			if (words[i].length) {
-				OUT.appendChild(
-					createBubble(words[i])
+
+		var bubbles = [];
+
+		$.each(
+			$input.val().split(regExpSplit), 
+			function (i, word) {
+				var len  = word.replace(regExpCount, '').length,
+					size = getSize(len);
+
+				bubbles.push(
+					$('<div />')
+						.addClass('word-bubble')
+						.data('word', word)
+						.data('size', size)
+						.width(size)
+						.height(size)
+						.attr('title', '[' + len + '] ' + word)
+						.css('background-color', 'hsl(' + (len * 7 - 300) + ', 50%, 50%)')
+						//.css({margin:(spacing - size) / 2})
 				);
 			}
-		}
+		);
+
+		$output.empty().append(bubbles);
+
 	}
 
-	return {
-		init : init
-	};
+	$(document).ready(function () {
+
+		$input  = $('#text-bubbles-input')
+		$output = $('#text-bubbles-output');
+
+		$('#bubble-type')
+			.on(
+				'change',
+				function () {
+					if     (this.value === "area")
+						bubbleType = kBT.AREA;
+					else if(this.value === "square")
+						bubbleType = kBT.SQUARE;
+					else
+						bubbleType = kBT.LINEAR;
+					updateBubbles();
+				}
+			);
+
+		$('#bubble-set-scale')
+			.val(scale)
+			.on(
+				'change',
+				function () {
+					var x = Number(this.value);
+					if (!isNaN(x)) {
+						scale = x / 10;
+						updateBubbles();
+					}
+				}
+			);
+
+		$('#bubble-set-spacing')
+			.val(spacing)
+			.on(
+				'change',
+				function () {
+					var x = Number(this.value);
+					if (!isNaN(x)) {
+						spacing = x;
+						updateBubbles();
+					}
+				}
+			);
+
+		$input.on('input', updateBubbles).trigger('input');
+
+	});
 
 })();
