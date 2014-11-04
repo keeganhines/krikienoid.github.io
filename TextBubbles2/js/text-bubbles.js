@@ -21,10 +21,11 @@ var textBubbles = (function () {
 		spacing     = 1,
 		isGridded   = false,
 		regExpUTF   =
+			'\\u00ad' +
 			'\\u00c0-\\u00d6\\u00d8-\\u00f6\\u00d8-\\u01bf' + // Extended Latin
 			'\\u01c4-\\u02af\\u0370-\\u0373\\u0376\\u0377'  + // Greek and Russian
 			'\\u037b-\\u037d\\u0386\\u0388-\\u038a\\u038c'  +
-			'\\u038e-\\u03a1\\u03a3-\\u0481\\u048a-\\u0527' + '\\u00ad' +
+			'\\u038e-\\u03a1\\u03a3-\\u0481\\u048a-\\u0527' +
 			'\\u0531-\\u0556\\u0561-\\u0587' + // Armenian
 			'\\u05d0-\\u05ea\\u05f0-\\u05f2' + // Hebrew
 			'\\u0620-\\u064a\\u0660-\\u0669' + // Arabic
@@ -32,8 +33,11 @@ var textBubbles = (function () {
 			'\\u0710-\\u072f\\u074d-\\u07a5' +
 			'\\u07c0-\\u07ea\\u0800-\\u0815' + // Thaana
 			'\\u0840-\\u0858\\u08a0-\\u08b2' + // Mandaic & Arabic Extended
-			'\\u0904-\\u0939\\u0958-\\u0961' + // Hindi
+			'\\u0904-\\u0939\\u0958-\\u0961' + // Devanagari
 			'\\u0966-\\u096f\\u0972-\\u097f' +
+			'\\u0985-\\u098c\\u098f\\u0990\\u0993-\\u09a8' + // Bengali
+			'\\u09aa-\\u09b0\\u09b2\\u09b6-\\u09b9' +
+			'\\u09dc-\\u09e1\\u09e6-\\u09f1' +
 			'',
 		regExpSplit = new RegExp('[^a-zA-Z' + regExpUTF + '\\d\\.\\-\']'),
 		regExpCount = new RegExp('[^a-zA-Z' + regExpUTF + '\\d]', 'g'),
