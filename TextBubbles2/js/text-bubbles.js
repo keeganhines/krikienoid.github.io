@@ -48,11 +48,9 @@ var textBubbles = (function () {
 				bubbles.push(
 					$('<div />')
 						.addClass('word-bubble')
-						.data('word', word)
-						.data('size', size)
+						.attr('data-title', '[' + len + '] ' + word)
 						.width(size)
 						.height(size)
-						.attr('title', '[' + len + '] ' + word)
 						.css('background-color', 'hsl(' + (len * 7 - 300) + ', 50%, 50%)')
 						//.css({margin:(spacing - size) / 2})
 				);
@@ -65,7 +63,7 @@ var textBubbles = (function () {
 
 	$(document).ready(function () {
 
-		$input  = $('#text-bubbles-input')
+		$input  = $('#text-bubbles-input');
 		$output = $('#text-bubbles-output');
 
 		$('#bubble-type')

@@ -92,7 +92,6 @@ div.wrapper-text {
 	border-radius : 50%;
 	margin  : 1px;
 	float   : left;
-<<<<<<< HEAD
 	display : inline-block;
 	box-shadow : inset 200px 200px rgba(0,0,0,0);
 	transition : box-shadow .2s;
@@ -102,13 +101,8 @@ div.wrapper-text {
 	border  : 1.5px solid #888;
 	z-index : 100;
 	box-shadow : inset 200px 200px rgba(0,0,0,.4);
-=======
-	display : inline;
-	position: relative;
-}
-
-.word-bubble:hover {
-	border-color : #f00;
+	display  : inline;
+	position : relative;
 }
 
 /* css tooltips */
@@ -122,12 +116,5 @@ div.wrapper-text {
 	font  : 12px/22px sans-serif;
 	font-size : smaller;
 	padding : 0 10px;
-	content : attr(title);
-}
-
-/* //// Misc //// */
-
-.text-container {
-	display : none;
->>>>>>> pr/1
+	content : attr(data-title);
 }
