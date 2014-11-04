@@ -24,7 +24,7 @@ var textBubbles = (function () {
 			'\\u00c0-\\u00d6\\u00d8-\\u00f6\\u00d8-\\u01bf' + // Extended Latin
 			'\\u01c4-\\u02af\\u0370-\\u0373\\u0376\\u0377'  + // Greek and Russian
 			'\\u037b-\\u037d\\u0386\\u0388-\\u038a\\u038c'  +
-			'\\u038e-\\u03a1\\u03a3-\\u0481\\u048a-\\u0527' +
+			'\\u038e-\\u03a1\\u03a3-\\u0481\\u048a-\\u0527' + '\\u00ad' +
 			'\\u0531-\\u0556\\u0561-\\u0587' + // Armenian
 			'\\u05d0-\\u05ea\\u05f0-\\u05f2' + // Hebrew
 			'\\u0620-\\u064a\\u0660-\\u0669' + // Arabic
