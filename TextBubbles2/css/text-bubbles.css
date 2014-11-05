@@ -174,7 +174,6 @@ body,
 }
 
 .word-bubble:hover {
-	border  : 2px solid dimgray;
 	z-index : 100;
 	box-shadow : inset 200px 200px rgba(0,0,0,.4);
 	display  : inline;
