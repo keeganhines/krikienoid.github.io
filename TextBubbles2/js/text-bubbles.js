@@ -24,7 +24,7 @@ var textBubbles = (function () {
 		BASE_QUAD = Math.sqrt(BASE_LEN),
 		BASE_CUBE = Math.pow(BASE_LEN, 2/3);
 
-	var DEF_SCALE    = 2,
+	var DEF_SCALE    = 5,
 		DEF_SPACING  = 1,
 		scale        = DEF_SCALE,
 		spacing      = DEF_SPACING,
@@ -137,6 +137,15 @@ var textBubbles = (function () {
 
 	}
 
+	function readDataFromURL () {
+		var hashData = window.location.href.split('#')[1];
+		if (hashData && hashData.length) {
+			$input
+				.val(window.unescape(hashData))
+				.trigger('input');
+		}
+	}
+
 	$(document).ready(function () {
 
 		$input  = $('#text-bubbles-input');
@@ -157,7 +166,7 @@ var textBubbles = (function () {
 			);
 
 		$('#text-bubbles-set-scale')
-			.val(scale)
+			.val(scale * 10)
 			.on(
 				'change',
 				function () {
@@ -170,7 +179,7 @@ var textBubbles = (function () {
 			);
 
 		$('#text-bubbles-set-spacing')
-			.val(spacing)
+			.val(spacing * 5)
 			.on(
 				'change',
 				function () {
@@ -198,14 +207,31 @@ var textBubbles = (function () {
 					scale     = DEF_SCALE;
 					spacing   = DEF_SPACING;
 					isGridded = false;
-					$('#text-bubbles-set-scale').val(scale);
-					$('#text-bubbles-set-spacing').val(spacing);
+					$('#text-bubbles-set-scale').val(scale * 10);
+					$('#text-bubbles-set-spacing').val(spacing * 5);
 					$('#text-bubbles-set-gridded').attr('checked', isGridded);
 					updateBubbles();
 				}
 			);
 
+		$('#text-bubbles-get-url')
+			.on(
+				'click',
+				function () {
+					if ($input.val().length) {
+						window.prompt(
+							'Your link:',
+							window.location.href.split('#')[0] + '#' + window.escape($input.val())
+						);
+					}
+					else {
+						window.alert('Input field is empty!');
+					}
+				}
+			);
+
 		$input.on('input', updateBubbles).trigger('input');
+		readDataFromURL();
 
 	});
 

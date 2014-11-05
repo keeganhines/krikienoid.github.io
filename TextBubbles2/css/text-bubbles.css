@@ -173,6 +173,23 @@ body,
 	font-weight : bold;
 }
 
+#text-bubbles-get-url {
+	position : absolute;
+	right    : 10px;
+	bottom   : 10px;
+	background-color : #333;
+	border        : 2px solid #555;
+	border-radius : 3px;
+	color         : gainsboro;
+	padding       : 8px;
+}
+
+#text-bubbles-get-url:hover {
+	border-color : white;
+	color        : white;
+	transition   : .2s;
+}
+
 /* //// Bubbles //// */
 
 .word-bubble {
