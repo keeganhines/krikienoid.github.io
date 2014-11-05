@@ -16,33 +16,41 @@
 <body>
 	<div class="wrapper-main" data-role="page">
 		<div class="wrapper-head">
-			<div class="wrapper-head-block">
+			<div class="wrapper-head-title">
 				<h1>Text Bubbles</h1>
 				<p>
-					Visualize text as a series of<br />bubbles representing word size.
+					Visualize text as a series of bubbles representing word size.
 				</p>
-				<hr /><br />
-				<p>
-					<select id="bubble-type">
-						<option value="linear">Linear</option>
-						<option value="square">Square</option>
-						<option value="area"  >Circular Area</option>
-					</select>
-					Bubble Size Type
-				</p>
-				<p>
-					<input type="range" id="bubble-set-scale" />
-					&nbsp;Scale
-				</p>
-				<p>
-					<input type="range" id="bubble-set-spacing" />
-					&nbsp;Spacing&nbsp;
-					<input type="checkbox" id="bubble-set-gridded" />
-					&nbsp;Grid
-				</p>
+				<hr />
 			</div>
-			<div class="wrapper-head-block">
-				<textarea id="text-bubbles-input" placeholder="Enter text here ...">
+			<div class="wrapper-head-block" onclick="this.classList.toggle('open')">
+				<h2>Settings</h2>
+				<div class="wrapper-head-hidable">
+					<p>
+						<select id="text-bubbles-set-type">
+							<option value="linear">Linear</option>
+							<option value="quadratic">Quadratic</option>
+							<option value="cubic"  >Cubic</option>
+						</select>
+						Bubble Size
+					</p>
+					<p>
+						<input type="range" id="text-bubbles-set-scale" />
+						&nbsp;Scale
+					</p>
+					<p>
+						<input type="range" id="text-bubbles-set-spacing" />
+						&nbsp;Spacing&nbsp;
+						<input type="checkbox" id="text-bubbles-set-gridded" />
+						&nbsp;Grid&nbsp;
+						<input type="button" id="text-bubbles-set-reset" value="Reset" />
+					</p>
+				</div>
+			</div>
+			<div class="wrapper-head-block open" onclick="this.classList.toggle('open')">
+				<h2>Text Input</h2>
+				<div class="wrapper-head-hidable">
+					<textarea id="text-bubbles-input" placeholder="Enter text here ...">
 SUPREME COURT OF THE UNITED STATES
  
 Brown v. Board of Education, 347 U.S. 483 (1954) (USSC+)
@@ -110,7 +118,37 @@ Because these are class actions, because of the wide applicability of this decis
 It is so ordered.
 
 * Together with No. 2, Briggs et al. v. Elliott et al., on appeal from the United States District Court for the Eastern District of South Carolina, argued December 9-10, 1952, reargued December 7-8, 1953; No. 4, Davis et al. v. County School Board of Prince Edward County, Virginia, et al. , on appeal from the United States District Court for the Eastern District of Virginia, argued December 10, 1952, reargued December 7-8, 1953, and No. 10, Gebhart et al. v. Belton et al., on certiorari to the Supreme Court of Delaware, argued December 11, 1952, reargued December 9, 1953.
-				</textarea>
+					</textarea>
+				</div>
+			</div>
+			<div class="wrapper-head-block" onclick="this.classList.toggle('open')">
+				<h2>Statistics</h2>
+				<div class="wrapper-head-hidable">
+					<p>
+						Word count:
+						<span class="text-bubbles-stat" id="text-bubbles-stat-words"></span>
+					</p>
+					<p>
+						Char count (any char):
+						<span class="text-bubbles-stat" id="text-bubbles-stat-chars"></span>
+					</p>
+					<p>
+						Char count (alphanum):
+						<span class="text-bubbles-stat" id="text-bubbles-stat-alphnums"></span>
+					</p>
+					<p>
+						Char count (letters):
+						<span class="text-bubbles-stat" id="text-bubbles-stat-letters"></span>
+					</p>
+					<p>
+						Average word size:
+						<span class="text-bubbles-stat" id="text-bubbles-stat-avglen"></span>
+					</p>
+					<p>
+						Longest word:
+						<span class="text-bubbles-stat" id="text-bubbles-stat-longest"></span>
+					</p>
+				</div>
 			</div>
 		</div>
 		<div class="wrapper-body">

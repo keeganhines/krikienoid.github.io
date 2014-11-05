@@ -2,11 +2,12 @@
  * Text Bubbles
  */
 
-/* //// Main //// */
+/* //// Basic Structure //// */
 
 * {
-	margin  : 0;
-	padding : 0;
+	margin   : 0;
+	padding  : 0;
+	overflow : hidden;
 	box-sizing         : border-box;
 	-moz-box-sizing    : border-box;
 	-webkit-box-sizing : border-box;
@@ -17,32 +18,53 @@ body,
 .wrapper-main {
 	width    : 100%;
 	height   : 100%;
-	overflow : hidden;
-	background-color : #333;
 }
 
-.wrapper-main {
-	padding-top : 180px;
+.wrapper-head,
+.wrapper-body,
+.wrapper-head-title,
+.wrapper-head-block {
+	float  : left;
 }
 
 /* Head */
 
 .wrapper-head {
-	height     : 180px;
-	margin-top : -180px;
-	color      : whitesmoke;
+	background-color    : #333;
+	border              : 0 groove #555;
+	border-right-width  : 4px;
+	border-bottom-width : 0;
+	color   : whitesmoke;
+	padding : 6px;
 }
 
+.wrapper-head-title,
+.wrapper-head-block,
+.wrapper-head-hidable {
+	width   : 100%;
+	height  : auto;
+}
+
+.wrapper-head-title,
 .wrapper-head-block {
-	width   : auto;
-	height  : 100%;
-	float   : left;
-	padding : 12px;
+	padding : 6px;
 }
 
-.wrapper-head-block > textarea {
-	min-width : 360px;
-	height    : 100%;
+.wrapper-head-title {
+	background-color   : #333;
+}
+
+.wrapper-head-hidable {
+	background    : rgba(0, 0, 0, 0.8);
+	border-radius : 3px;
+	color         : gainsboro;
+	padding       : 8px;
+}
+
+.wrapper-head textarea {
+	max-width : 100%;
+	width     : 100%;
+	height    : 100px;
 }
 
 /* Body */
@@ -57,7 +79,6 @@ body,
 .wrapper-text {
 	width     : 100%;
 	padding   : 24px;
-	padding-bottom : 200px;
 	display   : flex;
 	flex-wrap : wrap;
 	flex      : 1;
@@ -65,18 +86,93 @@ body,
 	align-items     : center;
 }
 
+/* //// Screen Sizes //// */
+
+/* Desktop (default) */
+
+.wrapper-main {
+	padding-top  : 0;
+	padding-left : 240px;
+}
+
+.wrapper-head {
+	width       : 240px;
+	height      : 100%;
+	margin-top  : 0;
+	margin-left : -240px;
+}
+
+/* Mobile */
+
+@media screen and (max-width : 600px) and (orientation : portrait) {
+
+	.wrapper-main {
+		padding-top  : 240px;
+		padding-left : 0;
+	}
+
+	.wrapper-head {
+		width       : 100%;
+		height      : 240px;
+		margin-top  : -240px;
+		margin-left : 0;
+		padding-top : 72px;
+		overflow    : auto;
+		border-right-width  : 0;
+		border-bottom-width : 4px;
+	}
+
+	.wrapper-head-title {
+		position : fixed;
+		height   : 72px;
+		margin   : -72px -6px 0 -6px;
+	}
+
+	/*.wrapper-head-block > h2:hover {
+		color : gold;
+	}
+
+	.wrapper-head-hidable {
+		display : none;
+	}
+
+	.wrapper-head-block.open > .wrapper-head-hidable {
+		display : block;
+	}
+
+	.wrapper-head textarea {
+		max-height : 80px;
+		height     : 80px;
+	}*/
+
+}
+
 /* //// Styling //// */
 
-.wrapper-head-block > p,
-.wrapper-head-block > hr {
+.wrapper-head h1,
+.wrapper-head h2,
+.wrapper-head p {
+	font-family : sans-serif;
+}
+
+.wrapper-head h1 {
+	font-size : 24pt;
+}
+
+.wrapper-head h2 {
+	font-size : 10pt;
+}
+
+.wrapper-head p,
+.wrapper-head hr {
 	margin-bottom : 4px;
 	font-size     : 10pt;
 	border-color  : whitesmoke ;
 }
 
-.wrapper-head-block > h1,
-.wrapper-head-block > p {
-	font-family : sans-serif;
+.text-bubbles-stat {
+	color       : gold;
+	font-weight : bold;
 }
 
 /* //// Bubbles //// */
@@ -88,6 +184,7 @@ body,
 	margin  : 1px;
 	float   : left;
 	display : inline-block;
+	overflow   : visible;
 	box-shadow : inset 200px 200px rgba(0,0,0,0);
 	transition : box-shadow .2s;
 }
@@ -102,7 +199,7 @@ body,
 
 /* CSS Tooltips */
 
-.word-bubble:hover:before {
+.word-bubble:hover::before {
 	display  : inline-block;
 	position : absolute;
 	top      : 15px;

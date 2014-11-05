@@ -14,13 +14,19 @@
 var textBubbles = (function () {
 
 	var kBT = {
-		LINEAR : 0, SQUARE : 1, AREA : 2
+		LINEAR : 0, QUADRATIC : 1, CUBIC : 2
 	};
 
-	var scale       = 2,
-		spacing     = 1,
-		isGridded   = false,
-		regExpUTF   =
+	var BASE_LEN  = 8,
+		BASE_QUAD = Math.sqrt(BASE_LEN),
+		BASE_CUBE = Math.pow(BASE_LEN, 2/3);
+
+	var DEF_SCALE    = 2,
+		DEF_SPACING  = 1,
+		scale        = DEF_SCALE,
+		spacing      = DEF_SPACING,
+		isGridded    = false,
+		regExpUTF    = (
 			'\\u00ad' +
 			'\\u00c0-\\u00d6\\u00d8-\\u00f6\\u00d8-\\u01bf' + // Extended Latin
 			'\\u01c4-\\u02af\\u0370-\\u0373\\u0376\\u0377'  + // Greek and Russian
@@ -38,29 +44,48 @@ var textBubbles = (function () {
 			'\\u0985-\\u098c\\u098f\\u0990\\u0993-\\u09a8' + // Bengali
 			'\\u09aa-\\u09b0\\u09b2\\u09b6-\\u09b9' +
 			'\\u09dc-\\u09e1\\u09e6-\\u09f1' +
-			'',
-		regExpSplit = new RegExp('[^a-zA-Z' + regExpUTF + '\\d\\.\\-\']'),
-		regExpCount = new RegExp('[^a-zA-Z' + regExpUTF + '\\d]', 'g'),
-		bubbleType  = kBT.LINEAR;
+			''
+			),
+		regExpSplit  = new RegExp('[^a-zA-Z' + regExpUTF + '\\d\\.\\-\']'),
+		regExpCount  = new RegExp('[^a-zA-Z' + regExpUTF + '\\d]', 'g'),
+		regExpLetter = new RegExp('[^a-zA-Z' + regExpUTF + ']', 'g'),
+		bubbleType   = kBT.LINEAR;
 
 	var $input,
 		$output;
 
+	var isStatsOn = true,
+		stats;
+
+	function resetStats () {
+		stats = {
+			words    : 0,
+			chars    : 0,
+			alphNums : 0,
+			letters  : 0,
+			avgLen   : 0,
+			longest  : ''
+		};
+	}
+
 	function getSize (x) {
 		switch (bubbleType) {
-			case kBT.LINEAR : return x * scale;
-			case kBT.SQUARE : return Math.sqrt(x) * scale;
-			case kBT.AREA   : return Math.sqrt(x / Math.PI) * 2 * scale;
-			default         : return x * scale;
+			case kBT.LINEAR    : return x * scale;
+			case kBT.QUADRATIC : return Math.sqrt(x)     * scale * BASE_QUAD;
+			case kBT.CUBIC     : return Math.pow(x, 1/3) * scale * BASE_CUBE;
+			default            : return x * scale;
 		}
 	}
 
 	function updateBubbles () {
 
-		var bubbles = [];
+		var words   = $input.val().split(regExpSplit),
+			bubbles = [];
+
+		resetStats();
 
 		$.each(
-			$input.val().split(regExpSplit), 
+			words, 
 			function (i, word) {
 				var len  = word.replace(regExpCount, '').length,
 					size = getSize(len);
@@ -79,9 +104,31 @@ var textBubbles = (function () {
 									{'margin-right' : spacing}
 							)
 					);
+					if (isStatsOn) {
+						stats.words    ++;
+						stats.alphNums += len;
+						stats.letters  += word.replace(regExpLetter, '').length;
+						if (len > stats.longest.replace(regExpCount, '').length) {
+							stats.longest = word;
+						}
+					}
+
 				}
 			}
 		);
+
+		if (isStatsOn) {
+			stats.chars  = $input.val().length;
+			stats.avgLen = (stats.alphNums / stats.words).toFixed(1);
+			$('#text-bubbles-stat-words')    .text(stats.words);
+			$('#text-bubbles-stat-chars')    .text(stats.chars);
+			$('#text-bubbles-stat-alphnums') .text(stats.alphNums);
+			$('#text-bubbles-stat-letters')  .text(stats.letters);
+			$('#text-bubbles-stat-avglen')   .text(stats.avgLen);
+			$('#text-bubbles-stat-longest')  .text(
+				'[' + stats.longest.replace(regExpCount, '').length + ']' + stats.longest
+			);
+		}
 
 		$output.empty().append(bubbles);
 
@@ -92,21 +139,21 @@ var textBubbles = (function () {
 		$input  = $('#text-bubbles-input');
 		$output = $('#text-bubbles-output');
 
-		$('#bubble-type')
+		$('#text-bubbles-set-type')
 			.on(
 				'change',
 				function () {
-					if     (this.value === "area")
-						bubbleType = kBT.AREA;
-					else if(this.value === "square")
-						bubbleType = kBT.SQUARE;
+					if     (this.value === "cubic")
+						bubbleType = kBT.CUBIC;
+					else if(this.value === "quadratic")
+						bubbleType = kBT.QUADRATIC;
 					else
 						bubbleType = kBT.LINEAR;
 					updateBubbles();
 				}
 			);
 
-		$('#bubble-set-scale')
+		$('#text-bubbles-set-scale')
 			.val(scale)
 			.on(
 				'change',
@@ -119,7 +166,7 @@ var textBubbles = (function () {
 				}
 			);
 
-		$('#bubble-set-spacing')
+		$('#text-bubbles-set-spacing')
 			.val(spacing)
 			.on(
 				'change',
@@ -132,11 +179,25 @@ var textBubbles = (function () {
 				}
 			);
 
-		$('#bubble-set-gridded')
+		$('#text-bubbles-set-gridded')
 			.on(
 				'change',
 				function () {
 					isGridded = !!this.checked;
+					updateBubbles();
+				}
+			);
+
+		$('#text-bubbles-set-reset')
+			.on(
+				'click',
+				function () {
+					scale     = DEF_SCALE;
+					spacing   = DEF_SPACING;
+					isGridded = false;
+					$('#text-bubbles-set-scale').val(scale);
+					$('#text-bubbles-set-spacing').val(spacing);
+					$('#text-bubbles-set-gridded').attr('checked', isGridded);
 					updateBubbles();
 				}
 			);
