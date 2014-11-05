@@ -1,12 +1,15 @@
 /**
  * Text Bubbles
- * represent words as a series of bubbles
- * 
+ *
+ * Visualize text as a series of
+ * bubbles representing word size.
+ *
+ *
  * Contributors:
  *
- * Ken Sugiura /u/krikienoid (reddit)
- * /u/qi1 (reddit)
- * /u/kylemit (reddit)
+ * Ken Sugiura, reddit.com/u/krikienoid
+ * reddit.com/u/qi1
+ * reddit.com/u/kylemit
  *
  * MIT License 2014
  */
@@ -46,7 +49,7 @@ var textBubbles = (function () {
 			'\\u09dc-\\u09e1\\u09e6-\\u09f1' +
 			''
 			),
-		regExpSplit  = new RegExp('[^a-zA-Z' + regExpUTF + '\\d\\.\\-\']'),
+		regExpSplit  = new RegExp('[^a-zA-Z' + regExpUTF + '\\d\\.\\-\'’]'),
 		regExpCount  = new RegExp('[^a-zA-Z' + regExpUTF + '\\d]', 'g'),
 		regExpLetter = new RegExp('[^a-zA-Z' + regExpUTF + ']', 'g'),
 		bubbleType   = kBT.LINEAR;

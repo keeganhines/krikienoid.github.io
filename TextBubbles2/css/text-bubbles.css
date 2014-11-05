@@ -1,5 +1,17 @@
 /**
  * Text Bubbles
+ *
+ * Visualize text as a series of
+ * bubbles representing word size.
+ *
+ *
+ * Contributors:
+ *
+ * Ken Sugiura, reddit.com/u/krikienoid
+ * reddit.com/u/qi1
+ * reddit.com/u/kylemit
+ *
+ * MIT License 2014
  */
 
 /* //// Basic Structure //// */
@@ -52,6 +64,7 @@ body,
 
 .wrapper-head-title {
 	background-color : #333;
+	border           : 0 groove #555;
 }
 
 .wrapper-head-hidable {
@@ -127,6 +140,7 @@ body,
 		position : fixed;
 		height   : 72px;
 		margin   : -72px -6px 0 -6px;
+		border-bottom-width : 4px;
 	}
 
 }
